@@ -47,6 +47,14 @@ class GameFragment : Fragment() {
         return view
     }
 
+    private fun wonLostMessage(): String {
+        var message = ""
+        if (isWon()) message = "You WON!"
+        else if (isLost()) message = "You lost!"
+        message += " The word was $secretWord"
+        return message
+    }
+
     // Hien thi tu bi mat duoi dang 1 phan cua tu day du. cac ky tu chua doan duoc hien dau _,
     // cac ky tu da doan duoc hien len dung vi tri cua ky tu trong tu bi mat secretWord
     private fun deriveSecretWordDisplay(): String {
