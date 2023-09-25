@@ -44,6 +44,7 @@ android {
 
 dependencies {
     val navVersion = "2.7.2"
+    val lifecycleVersion = "2.6.2"
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -54,4 +55,6 @@ dependencies {
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     //implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 }
