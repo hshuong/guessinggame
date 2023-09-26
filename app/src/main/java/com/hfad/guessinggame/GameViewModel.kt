@@ -1,20 +1,29 @@
 package com.hfad.guessinggame
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 class GameViewModel : ViewModel() {
     val words = listOf("Android", "Activity", "Fragment")
     val secretWord = words.random().uppercase()
-    var secretWordDisplay = ""
+    //var secretWordDisplay = ""
+    // nho la var duoc thay bang val nhe. vi chuyen tu viec dung new reference sang
+    // viec giu nguyen reference ban dau (var secretWordDisplay => val secretWordDisplay)
+    val secretWordDisplay = MutableLiveData<String>()
     var correctGuesses = ""
-    var incorrectGuesses = ""
-    var livesLeft = 8
+    //var incorrectGuesses = ""
+    val incorrectGuesses = MutableLiveData<String>("")
+    //var livesLeft = 8
+    val livesLeft = MutableLiveData<Int>(8)
+
 
     init {
-        // ban dau, vi du secretWord la ANDROID, ham deriveSecretWordDisplay se goi
-        // checkLetter de kiem tra tung ky tu trong correctGuesses (dang empty) so voi
+        // ban dau, vi du secretWord la ANDROID, ham deriveSecretWordDisplay se kiem tra
+        // tung ky tu cua secretWord bang cach goi ham checkLetter
+        // de kiem tra tung ky tu trong correctGuesses (dang la empty) so voi tu
         // ANDROID. Do correctGuesses ban dau la empty nen deriveSecretWordDisplay tra ve
         // la "_______"
-        secretWordDisplay = deriveSecretWordDisplay()
+        //secretWordDisplay = deriveSecretWordDisplay()
+        secretWordDisplay.value = deriveSecretWordDisplay()
     }
 
     // Hien thi tu bi mat duoi dang 1 phan cua tu day du. cac ky tu chua doan duoc hien dau _,
@@ -47,20 +56,27 @@ class GameViewModel : ViewModel() {
                 // bo sung ky tu doan dung vao String cac ky tu da doan dung
                 correctGuesses += guess
                 // cap nhat lai tu hien thi mot phan nguoi dung doan dung cua tu bi mat
-                secretWordDisplay = deriveSecretWordDisplay()
+                //secretWordDisplay = deriveSecretWordDisplay()
+                // khong can kiem tra null vi day la string
+                secretWordDisplay.value = deriveSecretWordDisplay()
             } else {
                 // ky tu nay doan sai
                 // ghep ky tu doan sai vao String cac ky tu doan sai
-                incorrectGuesses += guess
+                // incorrectGuesses += guess
+                incorrectGuesses.value += guess
                 // giam mang, so lan duoc doan di
-                livesLeft --
+                // livesLeft --
+                // phai kiem tra null vi value cua MutableLiveData<Int> co the null
+                livesLeft.value = livesLeft.value?.minus(1)
+
             }
         }
     }
 
-    fun isWon(): Boolean = secretWord.equals(secretWordDisplay, true)
+    fun isWon(): Boolean = secretWord.equals(secretWordDisplay.value, true)
 
-    fun isLost(): Boolean = livesLeft <=0
+    //fun isLost(): Boolean = livesLeft <=0
+    fun isLost(): Boolean = livesLeft.value ?:0 <=0
 
     fun wonLostMessage(): String {
         var message = ""

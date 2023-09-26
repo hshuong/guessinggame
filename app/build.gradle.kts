@@ -57,4 +57,6 @@ dependencies {
     //implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 }
