@@ -6,7 +6,8 @@ class GameViewModel : ViewModel() {
     val words = listOf("Android", "Activity", "Fragment")
     val secretWord = words.random().uppercase()
     //var secretWordDisplay = ""
-    // nho la var duoc thay bang val nhe. vi chuyen tu viec dung new reference sang
+    // nho la var duoc thay bang val nhe. vi chuyen tu viec dung new reference moi
+    // khi thay doi gia tri cua secretWordDisplay (thi tao ra 1 doi tuong moi va tro den) sang
     // viec giu nguyen reference ban dau (var secretWordDisplay => val secretWordDisplay)
     val secretWordDisplay = MutableLiveData<String>()
     var correctGuesses = ""
@@ -55,9 +56,9 @@ class GameViewModel : ViewModel() {
             if (secretWord.contains(guess)) {
                 // bo sung ky tu doan dung vao String cac ky tu da doan dung
                 correctGuesses += guess
-                // cap nhat lai tu hien thi mot phan nguoi dung doan dung cua tu bi mat
+                // cap nhat lai word hien thi mot phan khi nguoi dung doan dung 1 ky tu cua word bi mat
                 //secretWordDisplay = deriveSecretWordDisplay()
-                // khong can kiem tra null vi day la string
+
                 secretWordDisplay.value = deriveSecretWordDisplay()
             } else {
                 // ky tu nay doan sai
