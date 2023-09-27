@@ -1,20 +1,31 @@
 package com.hfad.guessinggame
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 class GameViewModel : ViewModel() {
-    val words = listOf("Android", "Activity", "Fragment")
-    val secretWord = words.random().uppercase()
+    private val words = listOf("Android", "Activity", "Fragment")
+    private val secretWord = words.random().uppercase()
     //var secretWordDisplay = ""
     // nho la var duoc thay bang val nhe. vi chuyen tu viec dung new reference moi
     // khi thay doi gia tri cua secretWordDisplay (thi tao ra 1 doi tuong moi va tro den) sang
     // viec giu nguyen reference ban dau (var secretWordDisplay => val secretWordDisplay)
-    val secretWordDisplay = MutableLiveData<String>()
-    var correctGuesses = ""
+    //val secretWordDisplay = MutableLiveData<String>()
+    private val _secretWordDisplay = MutableLiveData<String>()
+    val secretWordDisplay: LiveData<String>
+        get() = _secretWordDisplay
+    private var correctGuesses = ""
     //var incorrectGuesses = ""
-    val incorrectGuesses = MutableLiveData<String>("")
+    //val incorrectGuesses = MutableLiveData<String>("")
+    private val _incorrectGuesses = MutableLiveData<String>("")
+    val incorrectGuesses: LiveData<String>
+        get() = _incorrectGuesses
+
     //var livesLeft = 8
-    val livesLeft = MutableLiveData<Int>(8)
+    // val livesLeft = MutableLiveData<Int>(8)
+    private val _livesLeft = MutableLiveData<Int>(8)
+    val livesLeft : LiveData<Int>
+        get() = _livesLeft
 
 
     init {
@@ -24,7 +35,8 @@ class GameViewModel : ViewModel() {
         // ANDROID. Do correctGuesses ban dau la empty nen deriveSecretWordDisplay tra ve
         // la "_______"
         //secretWordDisplay = deriveSecretWordDisplay()
-        secretWordDisplay.value = deriveSecretWordDisplay()
+        //secretWordDisplay.value = deriveSecretWordDisplay()
+        _secretWordDisplay.value = deriveSecretWordDisplay()
     }
 
     // Hien thi tu bi mat duoi dang 1 phan cua tu day du. cac ky tu chua doan duoc hien dau _,
@@ -57,18 +69,21 @@ class GameViewModel : ViewModel() {
                 // bo sung ky tu doan dung vao String cac ky tu da doan dung
                 correctGuesses += guess
                 // cap nhat lai word hien thi mot phan khi nguoi dung doan dung 1 ky tu cua word bi mat
-                //secretWordDisplay = deriveSecretWordDisplay()
+                // secretWordDisplay = deriveSecretWordDisplay()
 
-                secretWordDisplay.value = deriveSecretWordDisplay()
+                // secretWordDisplay.value = deriveSecretWordDisplay()
+                _secretWordDisplay.value = deriveSecretWordDisplay()
             } else {
                 // ky tu nay doan sai
                 // ghep ky tu doan sai vao String cac ky tu doan sai
                 // incorrectGuesses += guess
-                incorrectGuesses.value += guess
+                // incorrectGuesses.value += guess
+                _incorrectGuesses.value += guess
                 // giam mang, so lan duoc doan di
                 // livesLeft --
                 // phai kiem tra null vi value cua MutableLiveData<Int> co the null
-                livesLeft.value = livesLeft.value?.minus(1)
+                // livesLeft.value = livesLeft.value?.minus(1)
+                _livesLeft.value = _livesLeft.value?.minus(1)
 
             }
         }
