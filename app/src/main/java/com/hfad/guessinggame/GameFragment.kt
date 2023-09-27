@@ -43,6 +43,14 @@ class GameFragment : Fragment() {
             binding.word.text = newValue
         })
 
+        viewModel.gameOver.observe(viewLifecycleOwner, Observer { newValue ->
+            if (newValue) {
+                val action = GameFragmentDirections
+                    .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
+                view.findNavController().navigate(action)
+            }
+        })
+
 
         binding.guessButton.setOnClickListener {
             // khi nguoi dung nhap ky tu du doan va bam nut Guess thi goi makeGuess
@@ -50,11 +58,12 @@ class GameFragment : Fragment() {
             binding.guess.text = null
             // dung live data thi ko dung ham updateScreen() nua
             // updateScreen()
-            if (viewModel.isWon() || viewModel.isLost()) {
-                val action = GameFragmentDirections
-                    .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
-                view.findNavController().navigate(action)
-            }
+            // khong dung nua khi da dung viewModel.gameOver.observe o dong 46 o tren
+//            if (viewModel.isWon() || viewModel.isLost()) {
+//                val action = GameFragmentDirections
+//                    .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
+//                view.findNavController().navigate(action)
+//            }
         }
 
         return view

@@ -27,6 +27,10 @@ class GameViewModel : ViewModel() {
     val livesLeft : LiveData<Int>
         get() = _livesLeft
 
+    private val _gameOver = MutableLiveData<Boolean>(false)
+    val gameOver : LiveData<Boolean>
+        get() = _gameOver
+
 
     init {
         // ban dau, vi du secretWord la ANDROID, ham deriveSecretWordDisplay se kiem tra
@@ -74,8 +78,8 @@ class GameViewModel : ViewModel() {
                 // secretWordDisplay.value = deriveSecretWordDisplay()
                 _secretWordDisplay.value = deriveSecretWordDisplay()
             } else {
-                // ky tu nay doan sai
-                // ghep ky tu doan sai vao String cac ky tu doan sai
+                // ky tu nay nguoi dung doan sai
+                // ghep ky tu bi doan sai nay vao String cac ky tu doan sai
                 // incorrectGuesses += guess
                 // incorrectGuesses.value += guess
                 _incorrectGuesses.value += guess
@@ -84,15 +88,15 @@ class GameViewModel : ViewModel() {
                 // phai kiem tra null vi value cua MutableLiveData<Int> co the null
                 // livesLeft.value = livesLeft.value?.minus(1)
                 _livesLeft.value = _livesLeft.value?.minus(1)
-
             }
+            if (isWon() || isLost()) _gameOver.value = true
         }
     }
 
-    fun isWon(): Boolean = secretWord.equals(secretWordDisplay.value, true)
+    private fun isWon(): Boolean = secretWord.equals(secretWordDisplay.value, true)
 
     //fun isLost(): Boolean = livesLeft <=0
-    fun isLost(): Boolean = livesLeft.value ?:0 <=0
+    private fun isLost(): Boolean = livesLeft.value ?:0 <=0
 
     fun wonLostMessage(): String {
         var message = ""
