@@ -38,7 +38,9 @@ android {
     buildToolsVersion = "34.0.0"
 
     buildFeatures {
-        viewBinding = true
+        // khong dung viewBinding vi dataBinding da tao ra cung binding class
+        // chi tru activity la khong tao theo dataBinding
+        //viewBinding = true
         dataBinding = true
     }
 }
