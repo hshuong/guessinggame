@@ -29,19 +29,32 @@ class GameFragment : Fragment() {
 
         // dung live data observer roi thi ko dung ham nay nua
         //updateScreen()
+
         // Dung observe cho tung thuoc tinh cu the, ung voi tung cau trong ham updateScreen()
-        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { newValue ->
-            binding.incorrectGuesses.text = "Incorrect guesses: $newValue"
-        })
 
+        // tuy nhien, dung data binding thi fragment khong observe nua ma view observe
+        // thuoc tinh live data cua view model de tu cap nhat view
+        // nhung chi voi cac view can hien thi trong layout moi dung data binding,
+        // viec navigate sang fragment dua vao observe gia tri thuoc tinh gameOver
+        // van phai observe tiep, khong thay duoc
 
-        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { newValue ->
-            binding.lives.text = "You have $newValue lives left"
-        })
+        // dung data binding
 
-        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { newValue ->
-            binding.word.text = newValue
-        })
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+//        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { newValue ->
+//            binding.incorrectGuesses.text = "Incorrect guesses: $newValue"
+//        })
+//
+//
+//        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { newValue ->
+//            binding.lives.text = "You have $newValue lives left"
+//        })
+//
+//        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { newValue ->
+//            binding.word.text = newValue
+//        })
 
         viewModel.gameOver.observe(viewLifecycleOwner, Observer { newValue ->
             if (newValue) {
