@@ -42,6 +42,10 @@ android {
         // chi tru activity la khong tao theo dataBinding
         //viewBinding = true
         dataBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
 }
 
@@ -62,4 +66,34 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
+    //Compose
+    implementation("androidx.compose.ui:ui:1.5.2")
+    implementation("androidx.compose.ui:ui-graphics:1.5.2")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.2")
+
+    implementation("androidx.compose.material3:material3:1.1.2")
+    // Optional - Included automatically by material, only add when you need
+    // the icons but not the material library (e.g. when using Material3 or a
+    // custom design system based on Foundation)
+    implementation ("androidx.compose.material:material-icons-core")
+    // Optional - Add full set of material icons
+    implementation ("androidx.compose.material:material-icons-extended")
+    // Optional - Add window size utils
+    implementation ("androidx.compose.material3:material3-window-size-class")
+
+    // or skip Material Design and build directly on top of foundational components
+    implementation ("androidx.compose.foundation:foundation")
+
+    // Optional - Integration with activities
+    implementation ("androidx.activity:activity-compose:1.6.1")
+    // Optional - Integration with ViewModels
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    // Optional - Integration with LiveData
+    implementation ("androidx.compose.runtime:runtime-livedata")
+
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.2")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.2")
+
+
 }
