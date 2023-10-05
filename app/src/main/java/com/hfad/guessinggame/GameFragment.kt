@@ -71,7 +71,7 @@ class GameFragment : Fragment() {
             binding.guess.text = null
             // dung live data thi ko dung ham updateScreen() nua
             // updateScreen()
-            // khong dung nua khi da dung viewModel.gameOver.observe o dong 46 o tren
+            // khong dung nua khi da dung viewModel.gameOver.observe o dong 59 o tren
 //            if (viewModel.isWon() || viewModel.isLost()) {
 //                val action = GameFragmentDirections
 //                    .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
