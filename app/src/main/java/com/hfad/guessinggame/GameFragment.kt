@@ -5,6 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -21,7 +33,15 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        _binding = FragmentGameBinding.inflate(inflater, container, false).apply {
+            composeView.setContent {
+                MaterialTheme {
+                    Surface {
+                        GameFragmentContent(viewModel)
+                    }
+                }
+            }
+        }
         val view = binding.root
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
         //This tells the view model provider to get the GameViewModel object
@@ -80,6 +100,47 @@ class GameFragment : Fragment() {
         }
 
         return view
+    }
+    @Composable
+    fun FinishGameButton(clicked: () -> Unit) {
+        Button(onClick = clicked) {
+            Text("Finish Game")
+        }
+    }
+
+    @Composable
+    fun EnterGuess(guess: String, changed: (String) -> Unit) {
+        TextField(
+            value = guess,
+            label = {Text("Guess a letter")},
+            onValueChange = changed
+        )
+    }
+
+    @Composable
+    fun GuessButton(clicked: () -> Unit) {
+        Button(onClick = clicked) {
+            Text("Guess!")
+        }
+    }
+
+    @Composable
+    fun GameFragmentContent(viewModel: GameViewModel) {
+        val guess = remember { mutableStateOf("") }
+
+        Column(modifier = Modifier.fillMaxWidth()){
+            EnterGuess(guess.value) {guess.value = it}
+            Column (modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                GuessButton {
+                    viewModel.makeGuess(guess.value.uppercase())
+                    guess.value = ""
+                }
+                FinishGameButton {
+                    viewModel.finishGame()
+                }
+            }
+        }
     }
 
 //    private fun updateScreen() {
